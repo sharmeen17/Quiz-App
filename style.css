@@ -1,0 +1,44 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter";
+}
+
+.login-container{
+    display: flex;
+
+}
+
+.login-content{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+#emailLogin{
+    width: 440px;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+#passwordLogin{
+    width: 440px;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.login-button{
+    display: flex;
+padding: 12px 24px;
+justify-content: center;
+align-items: center;
+gap: 4px;
+border-radius: 100px;
+background-color: #F3BD00;
+border: none;
+cursor: pointer;
+}
