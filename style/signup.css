@@ -6,14 +6,14 @@
     font-family: "Inter";
 }
 
-.signup-container {
+.login-container {
     display: inline-flex;
     align-items: center;
     gap: 163px;
     padding: 247px 207px 248px 120px;
 }
 
-.signup-title > h1{
+.login-title > h1{
     color:  #1C1C1E;
 font-size: 32px;
 font-style: normal;
@@ -21,37 +21,31 @@ font-weight: 700;
 line-height: 120%;
 }
 
-.signup-content {
+.login-content {
     display: flex;
     flex-direction: column;
     gap: 24px;
 }
 
-#name-signup{
+#emailLogin {
     width: 440px;
     border-radius: 8px;
     padding: 16px;
 }
 
-#email-signup {
+#passwordLogin {
     width: 440px;
     border-radius: 8px;
     padding: 16px;
 }
 
-#password-signup {
-    width: 440px;
-    border-radius: 8px;
-    padding: 16px;
-}
-
-.signup-title {
+.login-title {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.signup-button {
+.login-button {
     display: flex;
     padding: 12px 24px;
     justify-content: center;
@@ -67,14 +61,8 @@ font-weight: 500;
 line-height: 120%;
 }
 
-.name-section{
-    margin-top: 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
 .email-section {
+    margin-top: 32px;
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -107,31 +95,4 @@ line-height: 120%;
     line-height: 120%;
     align-items: center;
     justify-content: center;
-}
-
-.terms-conditions{
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    margin-top: 16px;
-   
-}
-
-.checkbox{
-    cursor: pointer;
-}
-
-.signup-content > p{
-    color: #8E8E93;
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: 120%;
-}
-
-.have-account{
-    margin-top: 16px;
-    display: flex;
-    justify-content: center;
-    gap: 4px;
 }

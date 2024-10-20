@@ -1,40 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz App</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
     <section>
-        <div class="login-container">
+        <div class="signup-container">
             <div class="yellow-cloud">
                 <img src="/assets/question-cloud.png" alt="image-question cloud">
             </div>
-            <div class="login-content">
-                <h1>Login</h1>
-
-                <div class="email-section">
+            <div class="signup-content">
+                <div class="signup-title">
+                    <h1>Sign up</h1>
                     <p
                         style="color: var(--grey-3, #8E8E93);font-family: Inter;font-size: 16px;font-style: normal;font-weight: 400;line-height: 120%;">
-                        Please enter your details below.</p>
+                        Sign Up to Join</p>
+                </div>
+
+                <div class="name-section">
+                    <p>Full Name <span style="color:#D70015">*</span></p>
+                    <input type="email" id="name-signup" placeholder="Full Name" required>
+                </div>
+
+                <div class="email-section">
                     <p>Email ID <span style="color:#D70015">*</span></p>
-                    <input type="email" id="emailLogin" placeholder="xyz12@gmail.com" required>
+                    <input type="email" id="email-signup" placeholder="xyz12@gmail.com" required>
                 </div>
 
                 <div class="password-section">
                     <p>Password<span style="color:#D70015">*</span></p>
-                    <input type="password" id="passwordLogin" placeholder="Password" required>
+                    <input type="password" id="password-signup" placeholder="Password" required>
+                    <!-- <img src="/assets/password.svg" alt="password-icon"  width="22" height="19"> -->
                 </div>
 
-                <button type="submit" class="login-button">Login</button>
+                <button type="submit" class="signup-button">Sign up</button>
+
+                <div class="signup-google">
+                    <img src="/assets/devicon_google.svg" alt="google icon">
+                    <p>Sign up with Google</p>
+                </div>
+
+                <div class="terms-conditions">
+                    <img src="/assets/_Checkbox base.png" alt="checkbox" class="checkbox">
+                    <p>I accept <span style="color: #0948B4;cursor:pointer">Terms & Conditions</span></p>
+                </div>
+
+                <div class="have-account">
+                    <p>Have an account? </p>
+                    <p onclick="login()"><span style="color: #0948B4;cursor:pointer"> Log in? </span></p>
+                </div>
             </div>
         </div>
     </section>
 
+    <script src="script.js"></script>
 </body>
-
 </html>
