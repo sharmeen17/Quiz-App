@@ -3,22 +3,25 @@ function viewPassword(){
 }
 
 
-function signup(){
-    window.location = "pages/signup.html"
+function login(){
+    window.location = "index.html";
+    console.log("functioncalled")
 }
 
 
 function addDetails() {
-    var email = document.getElementById("emailLogin").value;
-    var password = document.getElementById("passwordLogin").value;
-    
+    var name = document.getElementById("name-signup").value;
+    var email = document.getElementById("email-signup").value;
+    var password = document.getElementById("password-signup").value;
+
+    localStorage.setItem("name", name);
     localStorage.setItem("email", email);
     localStorage.setItem("password", password);
 }
 
 function passwordHideShow() {
-    let showPassword = document.getElementById("viewpassword");
-    let password = document.querySelector("#passwordLogin");
+    let showPassword = document.getElementById("viewpassword")
+    let password = document.querySelector("#password-signup");
     if (password.type === "password") {
         password.type = "text";
         showPassword.style.color = "blue";

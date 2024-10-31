@@ -6,46 +6,96 @@
     font-family: "Inter";
 }
 
-.login-container {
+body {
+    overflow-x: hidden;
+}
+
+.signup-container {
     display: inline-flex;
     align-items: center;
     gap: 163px;
     padding: 247px 207px 248px 120px;
 }
 
-.login-title > h1{
-    color:  #1C1C1E;
-font-size: 32px;
-font-style: normal;
-font-weight: 700;
-line-height: 120%;
-}
-
-.login-content {
+.signup-content {
     display: flex;
     flex-direction: column;
-    gap: 24px;
 }
 
-#emailLogin {
-    width: 440px;
-    border-radius: 8px;
-    padding: 16px;
+.signup-content>p {
+    color: #8E8E93;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
 }
 
-#passwordLogin {
-    width: 440px;
-    border-radius: 8px;
-    padding: 16px;
-}
-
-.login-title {
+.signup-title {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.login-button {
+.signup-title>h1 {
+    color: #1C1C1E;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.name-section {
+    margin-top: 32px;
+    display: flex;
+    gap: 6px;
+}
+
+#name-signup {
+    width: 440px;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.email-section {
+    display: flex;
+    gap: 6px;
+}
+
+#email-signup {
+    width: 440px;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.password-section {
+    display: flex;
+    gap: 6px;
+}
+
+#password-signup {
+    width: 440px;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+#viewpassword{
+    position: relative;
+    right: 45px;
+    cursor: pointer;
+}
+
+.password-layout {
+    display: flex;
+    align-items: center;
+}
+
+.signup-button {
     display: flex;
     padding: 12px 24px;
     justify-content: center;
@@ -55,23 +105,10 @@ line-height: 120%;
     background-color: #F3BD00;
     border: none;
     cursor: pointer;
-font-size: 16px;
-font-style: normal;
-font-weight: 500;
-line-height: 120%;
-}
-
-.email-section {
-    margin-top: 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.password-section {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%;
 }
 
 .signup-google {
@@ -95,4 +132,50 @@ line-height: 120%;
     line-height: 120%;
     align-items: center;
     justify-content: center;
+}
+
+.terms-conditions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.checkbox {
+    cursor: pointer;
+}
+
+.have-account {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.password-layout {
+    display: flex;
+    align-items: center;
+}
+
+#view-password {
+    position: relative;
+    right: 50px;
+    cursor: pointer;
 }
