@@ -9,14 +9,35 @@ function login(){
 }
 
 
-function addDetails() {
-    var name = document.getElementById("name-signup").value;
-    var email = document.getElementById("email-signup").value;
-    var password = document.getElementById("password-signup").value;
+function handleSignup() {
+    var userName = document.getElementById("name-signup").value;
+    var userEmail = document.getElementById("email-signup").value;
+    var userPassword = document.getElementById("password-signup").value;
 
-    localStorage.setItem("name", name);
-    localStorage.setItem("email", email);
-    localStorage.setItem("password", password);
+    
+    let users = JSON.parse(localStorage.getItem("users")) ||[]
+
+    // Creating new user object
+    const newUser = {
+        name: userName,
+        email: userEmail,
+        password: userPassword
+    };
+
+    // Adding new user to the array of users
+    users.push(newUser);
+
+    localStorage.setItem("users", JSON.stringify(users));
+
+    // 1. localStorage -> user 
+    // 2. parse
+    // 3. users = []
+    // 4. localstorage set
+    // 5. redirect login
+
+    // localStorage.setItem("name", name);
+    // localStorage.setItem("email", email);
+    // localStorage.setItem("password", password);
 }
 
 function passwordHideShow() {
