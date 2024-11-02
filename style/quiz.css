@@ -105,7 +105,7 @@ body {
 }
 
 .option-text label:hover {
-    background-color:  #e0e0e0;
+    background-color: #e0e0e0;
     width: 400px;
     border-radius: 20px;
     cursor: pointer;
@@ -120,4 +120,42 @@ body {
     width: 400px;
     padding: 8px 16px;
     border-radius: 20px;
+}
+
+.previous-submit{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+#previous {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+}
+
+#previous>p {
+    color: #8E8E93;
+    text-align: center;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%;
+}
+
+#submit-continue{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+}
+
+#submit-continue>p{
+    color: #0948B4;
+text-align: center;
+font-size: 32px;
+font-style: normal;
+font-weight: 500;
+line-height: 120%;
 }
