@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz App</title>
     <link rel="stylesheet" href="/style/signup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -22,22 +23,24 @@
                     Sign Up to Join</p>
             </div>
 
-            <form class="signup-form">
+            <form class="signup-form" onsubmit="return false">
                 <div class="form-row">
-                    <label for="fname" class="name-section">Full Name <span style="color:#D70015">*</span></label><br>
-                    <input type="text" id="name-signup" placeholder="Full Name" required><br>
+                    <label for="name-signup" class="name-section">Full Name <span style="color:#D70015">*</span></label><br>
+                    <input type="text" id="name-signup" placeholder="Full Name" required>
+                    <br><span id="invalid-name" class="invalid-name"></span>
                 </div>
 
                 <div class="form-row">
-                    <label for="email" class="email-section">Email ID <span style="color:#D70015">*</span></label><br>
+                    <label for="email-signup" class="email-section">Email ID <span style="color:#D70015">*</span></label><br>
                     <input type="email" id="email-signup" placeholder="xyz12@gmail.com" required>
+                    <br><span id="invalid-email" class="invalid-email"></span>
                 </div>
 
                 <div class="form-row">
-                    <label for="password" class="password-section">Password<span
+                    <label for="user-password" class="password-section">Password<span
                             style="color:#D70015">*</span></label><br>
                     <div class="password-layout">
-                        <input type="password" id="password-signup" placeholder="Password" required>
+                        <input type="password" id="user-password" placeholder="Password" required>
                         <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="18px" fill="currentColor"
                             class="bi bi-eye-slash" viewBox="0 0 16 16" id="viewpassword" onclick="passwordHideShow()">
                             <path
@@ -49,9 +52,10 @@
                         </svg>
                         <!-- <img src="/assets/password.svg" width="22px" height="18px" alt="password icon" id="viewpassword" onclick="passwordHideShow()"> -->
                     </div>
+                    <br><span id="invalid-password" class="invalid-password"></span>
                 </div>
 
-                <button type="submit" class="signup-button" onclick="handleSignup()">Sign up</button>
+                <button class="signup-button" onsubmit="handleSignup(newUser);validateSignup(event)" id="signup-button">Sign up</button>
 
                 <div class="signup-google">
                     <img src="/assets/devicon_google.svg" alt="google icon">
@@ -61,7 +65,7 @@
 
             <form class="terms-conditions">
                 <label>
-                    <input type="checkbox" required>
+                    <input type="checkbox" required id="check-box">
                     <p>I accept <span style="color: #0948B4;cursor:pointer">Terms & Conditions</span></p>
                 </label>
 

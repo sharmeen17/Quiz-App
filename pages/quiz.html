@@ -8,8 +8,25 @@
     <link rel="stylesheet" href="/style/quiz.css">
 </head>
 
-<body>
+
+
+<body onload="startQuiz()"> <!-- Call startQuiz on load -->
     <header>
+        <nav id="navbar">
+            <img src="/assets/techpaatshala-logo.svg" alt="techpaathshala logo">
+            <img src="/assets/Avatar.png" alt="user-profile-pic" class="profile-pic">
+        </nav>
+    </header>
+
+    <section>
+        <div id="container">
+            <div id="quiz-page">
+                <!-- Questions will be displayed here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- <header>
         <nav id="navbar">
             <img src="/assets/techpaatshala-logo.svg" alt="techpaathshala logo">
             <img src="/assets/Avatar.png" alt="user-profile-pic" class="profile-pic">
@@ -19,68 +36,15 @@
 
     <section>
 
-        <div id="container" onload="loadQuestions()">
+        <div id="container" onload="loadRandomQuestion()">
             <div id="quiz-page">
-                <div id="question-container">
-                    <h1>Question 1 of 10</h1>
-                    <div class="progress-bar">
-                        <div class="progress" id="progress" style="width: 10%;"></div>
-                    </div>
-    
-                    <div class="question">
-                        <h2>1. This Is the Question?</h2>
-                        <p>Supporting Text</p>
-                    </div>
-                </div>
-    
-    
-                <div id="options-container">
-                    <div class="option-text">
-                        <input type="radio" name="options" id="option-zero" value="Option 1">
-                        <label for="option-zero">1. Option One</label>
-                    </div>
-    
-                    <div class="option-text">
-                        <input type="radio" name="options" id="option-one" value="Option 2">
-                        <label for="option-one">2. Option Two</label>
-                    </div>
-    
-                    <div class="option-text">
-                        <input type="radio" name="options" id="option-two" value="Option 3">
-                        <label for="option-two">3. Option Three</label>
-                    </div>
-                </div>
-    
-                <div class="previous-submit">
-                    <div id="previous">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="22" viewBox="0 0 28 22" fill="none">
-                            <path d="M26 11L2 11M2 11L11 20M2 11L11 2" stroke="#8E8E93" stroke-width="3"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        <p>Previous</p>
-                    </div>
-    
-                    <div id="submit-continue"> 
-                        <p>Submit & Continue</p>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="22" viewBox="0 0 28 22" fill="none">
-                            <path d="M2 11L26 11M26 11L17 20M26 11L17 2" stroke="#0948B4" stroke-width="3"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </div>
-                </div>
+                
     
             </div>
 
         </div>
 
-
-
-    </section>
-
-
-
-
-
+    </section> -->
 
     <script src="/script/quiz.js"></script>
 </body>
