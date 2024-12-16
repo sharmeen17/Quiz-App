@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <link rel="stylesheet" href="/styles/leaderboard.css">
+</head>
+
+<body>
+    <header>
+        <nav id="navbar">
+            <img src="/assets/techpaatshala-logo.svg" alt="techpaathshala logo">
+            <div class="nav-details">
+                <p>Edit Quizzes</p>
+                <p>All Quizzes</p>
+                <img src="/assets/Avatar.png" alt="user-profile-pic" class="profile-pic">
+            </div>
+        </nav>
+    </header>
+
+    <section>
+
+        <div class="page-down-arrow" id="pg-position" onclick="pageUpDown()">
+            <img src="/assets/arrow-down.svg">
+        </div>
+
+        <div id="leaderboard-container">
+
+            <div class="leaderboard-title">
+                <h1>Wow You Rank 1st</h1>
+                <p>Supporting Text</p>
+            </div>
+
+            <div class="victory-stand">
+
+                <div class="second-position">
+                    <p>#2</p>
+                    <img src="/assets/leaderboard-image1.png" alt="winner-image" class="leaderboard-winner-image">
+                    <div class="rectangle-container">
+                        <p class="score">Score</p>
+                        <p>844</p>
+                    </div>
+                </div>
+
+                <div class="first-position">
+                    <div class="winner-profile-crown">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="70" height="58" viewBox="0 0 70 58" fill="none">
+                            <path
+                                d="M41.3328 6.83334C41.3328 8.51168 40.6805 10.038 39.6133 11.1717L47.9226 21.5583C48.0355 21.7001 48.1937 21.7988 48.3706 21.838C48.5475 21.8772 48.7326 21.8545 48.8948 21.7737L57.2864 17.5747C57.1051 16.6559 57.1294 15.7085 57.3575 14.8002C57.5856 13.892 58.0119 13.0455 58.6058 12.3214C59.1997 11.5974 59.9464 11.0138 60.7925 10.6124C61.6386 10.211 62.563 10.0019 63.4995 10C65.0564 10.0003 66.5587 10.5742 67.7195 11.6119C68.8802 12.6497 69.6179 14.0787 69.7919 15.6259C69.9658 17.1731 69.5637 18.7302 68.6623 19.9998C67.7609 21.2693 66.4235 22.1624 64.9054 22.5083L59.1928 52.9812C58.9543 54.2513 58.2793 55.3981 57.2847 56.2233C56.2901 57.0484 55.0384 57.5001 53.7461 57.5H16.2528C14.9605 57.5001 13.7088 57.0484 12.7142 56.2233C11.7196 55.3981 11.0446 54.2513 10.8061 52.9812L5.09345 22.5083C3.87939 22.2315 2.77386 21.603 1.91509 20.7013C1.05632 19.7996 0.482413 18.6647 0.265133 17.4386C0.0478536 16.2125 0.196839 14.9495 0.693461 13.8076C1.19008 12.6657 2.01231 11.6955 3.05733 11.0184C4.10234 10.3413 5.32379 9.9872 6.56894 10.0005C7.81409 10.0138 9.02769 10.3939 10.058 11.0931C11.0883 11.7924 11.8896 12.78 12.3618 13.9322C12.8339 15.0845 12.9559 16.3503 12.7125 17.5715L21.1041 21.7705C21.2663 21.8513 21.4514 21.874 21.6283 21.8348C21.8052 21.7956 21.9634 21.6969 22.0763 21.5552L30.3856 11.1685C29.6777 10.4156 29.1647 9.50099 28.8915 8.50432C28.6183 7.50766 28.5931 6.45927 28.8181 5.45064C29.0432 4.44201 29.5116 3.50377 30.1826 2.71779C30.8536 1.93181 31.7068 1.32196 32.6676 0.941463C33.6284 0.560963 34.6678 0.421369 35.695 0.534859C36.7222 0.648349 37.706 1.01148 38.5606 1.59256C39.4152 2.17364 40.1146 2.95502 40.5978 3.86852C41.081 4.78203 41.3333 5.79991 41.3328 6.83334ZM34.9995 44.8333C36.6792 44.8333 38.2901 44.1661 39.4778 42.9784C40.6655 41.7906 41.3328 40.1797 41.3328 38.5C41.3328 36.8203 40.6655 35.2094 39.4778 34.0217C38.2901 32.8339 36.6792 32.1667 34.9995 32.1667C33.3197 32.1667 31.7088 32.8339 30.5211 34.0217C29.3334 35.2094 28.6661 36.8203 28.6661 38.5C28.6661 40.1797 29.3334 41.7906 30.5211 42.9784C31.7088 44.1661 33.3197 44.8333 34.9995 44.8333Z"
+                                fill="#F3BD00" />
+                        </svg>
+                        <img src="/assets/leaderboard-image2.png" alt="winner-image" class="leaderboard-winner-image">
+                    </div>
+                    <div class="rectangle-container">
+                        <p class="score">Score</p>
+                        <p>1042</p>
+                    </div>
+                </div>
+
+                <div class="third-position">
+                    <p>#3</p>
+                    <img src="/assets/leaderboard-image3.png" alt="winner-image" class="leaderboard-winner-image">
+                    <div class="rectangle-container">
+                        <p class="score">Score</p>
+                        <p>620</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="display-winner-names">
+                <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="697.535px" viewBox="0 0 1440 462" fill="none" class="white-curve">
+                    <g filter="url(#filter0_d_2_2008)">
+                      <path d="M1440.5 745.535H1V107.535C471.499 29.1583 952.5 27.1583 1440.5 107.535V745.535Z" fill="#FEFEFE"/>
+                    </g>
+                    <defs>
+                      <filter id="filter0_d_2_2008" x="-39" y="0" width="1519.5" height="777.535" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                        <feOffset dy="-8"/>
+                        <feGaussianBlur stdDeviation="20"/>
+                        <feComposite in2="hardAlpha" operator="out"/>
+                        <feColorMatrix type="matrix" values="0 0 0 0 0.109804 0 0 0 0 0.109804 0 0 0 0 0.117647 0 0 0 0.1 0"/>
+                        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2_2008"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2_2008" result="shape"/>
+                      </filter>
+                    </defs>
+                  </svg>
+            </div>
+
+            <div class="winner-names-container">
+                <div class="winner-rank">
+                    <div class="rank-name">
+                        <p>#4</p>
+                        <p>Name</p>
+                    </div>
+                    <p>400</p>
+                </div>
+
+                <div class="winner-rank">
+                    <div class="rank-name">
+                        <p>#4</p>
+                        <p>Name</p>
+                    </div>
+                    <p>400</p>
+                </div>
+
+                <div class="winner-rank">
+                    <div class="rank-name">
+                        <p>#4</p>
+                        <p>Name</p>
+                    </div>
+                    <p>400</p>
+                </div>
+    
+            </div>
+            
+        </div>
+        
+    </section>
+
+
+    <script src="/script.js"></script>
+
+</body>

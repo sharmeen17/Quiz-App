@@ -1,25 +1,15 @@
-// ------------------------------LOGIN PAGE---------------------------------------------------------------------
-
-//to handle view password icon funtion
-function viewPassword() {
-    var passwordState = document.getElementById("view-password");
+// Toggle from signup page to login page
+function login() {
+    window.location = "pages/login.html"
 }
 
-//redirect to signup page
+// Toggle from login page to signup page
 function signup() {
-    window.location = "pages/signup.html"
+    window.location = "/index.html"
 }
 
-//handle user login
-function addDetails() {
-    var email = document.getElementById("emailLogin").value;
-    var password = document.getElementById("passwordLogin").value;
-
-    localStorage.setItem("email", email);
-    localStorage.setItem("password", password);
-}
-
-//to show password in text
+// Password hide and show
+// for signup
 function passwordHideShow() {
     let showPassword = document.getElementById("viewpassword");
     let password = document.querySelector("user-password");
@@ -31,179 +21,173 @@ function passwordHideShow() {
         showPassword.style.color = "black";
     }
 }
-
-// ------------------------------------SIGN UP PAGE ------------------------------------------------------------
-
-console.log("script is working on this page")
-
-// redirecting to login page
-function login() {
-    window.location = "index.html";
-    console.log("functioncalled")
+// for login
+function passwordHideShow() {
+    let showPassword = document.getElementById("viewpassword");
+    let password = document.querySelector("user-password-login");
+    if (password.type === "password") {
+        password.type = "text";
+        showPassword.style.color = "blue";
+    } else if (password.type === "text") {
+        password.type = "password";
+        showPassword.style.color = "black";
+    }
 }
 
-function validateSignup(event) {
-    event.preventDefault();
+
+//=======================================  handle signup  ==================================
+// Handle the signup process
+function handleSignup() {
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];            //users array
+
+    var name = document.getElementById("name-signup").value;
+    var email = document.getElementById("email-signup").value;         //get input values
+    var password = document.getElementById("user-password").value;
+
+    // Call validateSignup and pass the values
+    if (validateSignup(name, email, password)) {
+        const newUser = {
+            userName: name,
+            userEmail: email,
+            userPassword: password
+        };
+
+        // Store the new user in localStorage
+        users.push(newUser);
+        localStorage.setItem("users", JSON.stringify(users));
 
 
-    console.log("script is working for validation")
-    console.log("in");
-    let fullName = document.getElementById('name-signup').value;
-    let email = document.getElementById('email-signup').value;
-    const password = document.getElementById('password-signup').value; // Fix variable name
+
+        // Pending
+        // 1. check whether user exists
+        // 2. passwordHideShow
+
+
+
+
+
+
+
+
+        window.location = "/pages/login.html";            //redirect to login page
+    }
+}
+
+// Validate user input in the signup form
+function validateSignup(name, email, password) {
+
     let invalidMsgFullName = document.getElementById("invalid-name");
     let invalidMsgPassword = document.getElementById("invalid-password");
     let invalidMsgEmail = document.getElementById("invalid-email");
-    let reqName = /^[a-zA-Z ]+$/; // Updated regex for full names
-    let reqEmail = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
-    let reqPass = /^(?=.*\d)(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹])(?=.*[a-z])(?=.*[A-Z]).{5,15}$/;
-    let checkbox = document.getElementById("terms").checked;
+
+    // Regex patterns for validation
+    let reqName = /^[a-zA-Z ]+$/; // Name: Only letters and spaces
+    let reqEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/; // Email: Valid email format
+    let reqPass = /^(?=.*\d)(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹])(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // Password: At least one number, one uppercase, one special character, and between 6 to 20 characters
+    let checkbox = document.getElementById("check-box").checked; // Terms and conditions checkbox
 
     // Clear previous error messages
     invalidMsgFullName.innerHTML = "";
     invalidMsgPassword.innerHTML = "";
     invalidMsgEmail.innerHTML = "";
 
-    if (fullName === "" || !reqName.test(fullName)) {
+    // Name validation
+    if (name === "" || !reqName.test(name)) {
         invalidMsgFullName.innerHTML = "Enter a valid Name";
         return false;
     }
 
-    if (!reqEmail.test(email) || email === "") {
+
+    // Email validation
+    if (email === "" || !reqEmail.test(email)) {
         invalidMsgEmail.innerHTML = "Enter a valid Email";
         return false;
     }
 
-    if (!reqPass.test(password) || password === "") {
-        invalidMsgPassword.innerHTML = "Enter a valid Password with one uppercase letter, one lowercase letter, and at least one special character.";
+    // Password validation
+    if (password === "" || !reqPass.test(password)) {
+        invalidMsgPassword.innerHTML = "Password must contain at least one uppercase letter, one lowercase letter, one special character, and be 6-20 characters long.";
         return false;
     }
 
+    // Terms and Conditions checkbox validation
     if (!checkbox) {
-        alert("Please check terms and conditions");
+        alert("Please check the terms and conditions");
         return false;
-    } else {
-        invalidMsgEmail.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
-        invalidMsgPassword.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
-        invalidMsgFullName.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
-
-
-        var userName = document.getElementById("name-signup").value;
-        var userEmail = document.getElementById("email-signup").value;
-        var userPassword = document.getElementById("user-password").value;
-        // Creating new user object
-        const newUser = {
-            name: userName,  // Use local variables
-            email: userEmail,
-            password: userPassword
-        };
-
-        handleSignup(newUser);  // Pass newUser directly
     }
 
-    // Resetting the input fields
-    document.getElementById('name-signup').value = "";
-    document.getElementById('email-signup').value = "";
-    document.getElementById('password-signup').value = "";
+    // If everything is valid, display success checks
+    invalidMsgFullName.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
+    invalidMsgEmail.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
+    invalidMsgPassword.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
+
+    return true; // Everything is valid
 }
 
-// Adding user data to local storage
-function handleSignup(newUser) {
-    console.log("script is working for adding user")
-    let users = JSON.parse(localStorage.getItem("users")) || [];
+// Real-time validation for name, email, and password
+document.getElementById("name-signup").addEventListener("input", function () {
+    let name = this.value;
+    let invalidMsg = document.getElementById("invalid-name");
+    let reqName = /^[a-zA-Z ]+$/;
+    invalidMsg.innerHTML = reqName.test(name) ? "" : "Enter a valid Name";
+});
 
-    // Check if the user already exists
-    const userExists = users.some(user => user.email === newUser.email);
-    if (userExists) {
-        alert("User already exists!");
-        return;
-    }
+document.getElementById("email-signup").addEventListener("input", function () {
+    let email = this.value;
+    let invalidMsg = document.getElementById("invalid-email");
+    let reqEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    invalidMsg.innerHTML = reqEmail.test(email) ? "" : "Enter a valid Email";
+});
 
-    // Adding new user to the array of users
-    users.push(newUser);
-    localStorage.setItem("users", JSON.stringify(users));
+document.getElementById("user-password").addEventListener("input", function () {
+    let password = this.value;
+    let invalidMsg = document.getElementById("invalid-password");
+    let reqPass = /^(?=.*\d)(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹])(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+    invalidMsg.innerHTML = reqPass.test(password) ? "" : "Password must contain at least one uppercase letter, one lowercase letter, one special character, and be 6-20 characters long.";
+});
 
-    alert("Registration Done Successfully");
-    window.location.href = "index.html";
+
+
+
+// ===================================== start quiz page to quiz ================================================
+
+function startQuizbutton() {
+    console.log("function called");
+    window.location = "/pages/quiz.html";
 }
 
 
-// // validating signup
-// function validateSignup() {
-//     console.log("in")
-//     let fullName = document.getElementById('name-signup').value;
-//     let email = document.getElementById('email-signup').value;
-//     const password = document.getElementById('user-password').value;
-//     let invalidMsgFullName = document.getElementById("invalid-name");
-//     let invalidMsgPassword = document.getElementById("invalid-password");
-//     let invalidMsgEmail = document.getElementById("invalid-email");
-//     let reqName = /^[a-zA-Z].*[\s\.]*$/g;
-//     let reqEmail = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
-//     let reqPass = /^(?=.*\d)(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹])(?=.*[a-z])(?=.*[A-Z]).{5,15}$/;
-//     let checkbox = document.getElementById("terms").checked
 
-//     if (fullName == "" || !reqName.test(fullName)) {
-//         invalidMsgFullName.innerHTML = "Enter a Name";
-//         return false;
-//     }
+// =================================== Leaderboard=========================================================
 
-//     if (!reqEmail.test(email) || email == "") {
-//         invalidMsgEmail.innerHTML = "Enter a valid Email";
-//         return false;
-//     }
 
-//     if (!reqPass.test(password) || password == "") {
-//         invalidMsgPassword.innerHTML = "Enter a valid Password with one uppercase letter, one lowercase letter, and at least one special character.";
-//         return false;
-//     }
 
-//     if (!checkbox) {
-//         alert("Please check terms and conditions")
-//         return false;
-//     }
+// // Add the sticky class to the navbar when you reach its scroll position. Remove the sticky class when you leave the scroll position.
+// function myFunction() {
 
-//     else {
-//         invalidMsgEmail.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
-//         invalidMsgPassword.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
-//         invalidMsgFullName.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
-//         // Creating new user object
-//         const newUser = {
-//             name: userName,
-//             email: userEmail,
-//             password: userPassword
-//         };
-//         handleSignup(userData);
-//     }
-//     document.getElementById('fullName').value = "";
-//     document.getElementById('email').value = "";
-//     document.getElementById('password').value = "";
+// // Get the navbar
+// const navbar = document.getElementById("navbar");
+
+// // Get the offset position of the navbar
+// const sticky = navbar.offsetTop;
+
+//     console.log("funtion called scroll")
+//   if (window.scrollY >= sticky) {
+//     navbar.classList.add("sticky")
+//   } else {
+//     navbar.classList.remove("sticky");
+//   }
 // }
 
 
-// // adding user data to local storage
-// function handleSignup(userData) {
-//     var userName = document.getElementById("name-signup").value;
-//     var userEmail = document.getElementById("email-signup").value;
-//     var userPassword = document.getElementById("password-signup").value;
 
-//     let users = JSON.parse(localStorage.getItem("users")) || []
+function pageUpDown() {
 
-//     // Adding new user to the array of users
-//     users.push(newUser);
+    const scrollButton = document.getElementById("pg-position")
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth',
+    });
 
-//     localStorage.setItem("users", JSON.stringify(users));
-
-//     // 1. localStorage -> user
-//     // 2. parse
-//     // 3. users = []
-//     // 4. localstorage set
-//     // 5. redirect login
-
-//     const userExists = storedUserData.some(user => user.email === userData.email);
-//     if (userExists) {
-//         alert("User already exists!");
-//         return;
-//     }
-//     alert("Registration Done Successfully");
-//     window.location.href = "index.html";
-// }
+}
