@@ -169,7 +169,6 @@ function loadQuestion() {
     // document.getElementById("previous").addEventListener("click", handlePreviousQuestion);
 
     if (currentQuestionIndex > 0) {
-        
         previous.innerHTML = 
         `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="22" viewBox="0 0 28 22" fill="none">
                         <path d="M26 11L2 11M2 11L11 20M2 11L11 2" stroke="#8E8E93" stroke-width="3"
@@ -178,7 +177,7 @@ function loadQuestion() {
                     <p>Previous</p>`
     }
     if (currentQuestionIndex ==0) {
-        
+        console.log(currentQuestionIndex)
         previous.style.display= none;
     }
 

@@ -9,10 +9,10 @@ function signup() {
 }
 
 // Password hide and show
-// for signup
-function passwordHideShow() {
+// for login
+function passwordHideShowLogin() {
     let showPassword = document.getElementById("viewpassword");
-    let password = document.querySelector("user-password");
+    let password = document.getElementById("user-password-login");
     if (password.type === "password") {
         password.type = "text";
         showPassword.style.color = "blue";
@@ -21,10 +21,10 @@ function passwordHideShow() {
         showPassword.style.color = "black";
     }
 }
-// for login
+// for signup
 function passwordHideShow() {
     let showPassword = document.getElementById("viewpassword");
-    let password = document.querySelector("user-password-login");
+    let password = document.getElementById("user-password");
     if (password.type === "password") {
         password.type = "text";
         showPassword.style.color = "blue";
@@ -45,6 +45,10 @@ function handleSignup() {
     var email = document.getElementById("email-signup").value;         //get input values
     var password = document.getElementById("user-password").value;
 
+    let userExists = users.some(user => user.userEmail === email);
+
+
+
     // Call validateSignup and pass the values
     if (validateSignup(name, email, password)) {
         const newUser = {
@@ -60,17 +64,18 @@ function handleSignup() {
 
 
         // Pending
-        // 1. check whether user exists
+        // 1. check whether user exists(done)
         // 2. passwordHideShow
 
 
 
+        if (userExists) {
+            alert("User Already exists");                                    //user exists
+        }
+        else {
+            window.location = "/pages/login.html";            //redirect to login page(CHANGE REQUIRED PUT CONDITION FOR REDIRECTING)
+        }
 
-
-
-
-
-        window.location = "/pages/login.html";            //redirect to login page
     }
 }
 
@@ -117,10 +122,6 @@ function validateSignup(name, email, password) {
         return false;
     }
 
-    // If everything is valid, display success checks
-    invalidMsgFullName.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
-    invalidMsgEmail.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
-    invalidMsgPassword.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
 
     return true; // Everything is valid
 }
