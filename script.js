@@ -34,6 +34,26 @@ function passwordHideShow() {
     }
 }
 
+//=======================================login page========================================
+
+function handleLogin(){
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];            //users array
+
+    var enteredEmail = document.getElementById("email-login").value;         //get input values
+    var enteredPassword = document.getElementById("user-password-login").value;
+
+    let userEmailMatches = users.some(user => user.userEmail === enteredEmail);
+    let userPasswordMatches = users.some(user => user.userPassword === enteredPassword);
+
+    if (userEmailMatches||userPasswordMatches) {
+        window.location = "/pages/startQuiz.html";            //redirect to Start quiz
+    }
+    else {
+        alert("Incorrect email or password!");
+    }
+}
+
 
 //=======================================  handle signup  ==================================
 // Handle the signup process
