@@ -81,19 +81,11 @@ function handleSignup() {
         users.push(newUser);
         localStorage.setItem("users", JSON.stringify(users));
 
-
-
-        // Pending
-        // 1. check whether user exists(done)
-        // 2. passwordHideShow
-
-
-
         if (userExists) {
             alert("User Already exists");                                    //user exists
         }
         else {
-            window.location = "/pages/login.html";            //redirect to login page(CHANGE REQUIRED PUT CONDITION FOR REDIRECTING)
+            window.location = "/pages/login.html";            //redirect to login page
         }
 
     }

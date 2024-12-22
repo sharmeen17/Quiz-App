@@ -124,7 +124,7 @@ body {
 
 .previous-submit{
     display: flex;
-    justify-content: space-between;
+    gap:824px;
     margin-top: 40px;
 }
 

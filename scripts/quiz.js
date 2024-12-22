@@ -3,112 +3,112 @@ var questions = [
     {
         question: 'Who is known as the "Father of the Nation" in India?',
         options: [
-            "1. Jawaharlal Nehru",
-            "2. Mahatma Gandhi",
-            "3. Subhas Chandra Bose",
-            "4. Bhagat Singh"
+            "Jawaharlal Nehru",
+            "Mahatma Gandhi",
+            "Subhas Chandra Bose",
+            "Bhagat Singh"
         ],
         rightAns: "Mahatma Gandhi"
     },
     {
         question: 'What is the capital of France?',
         options: [
-            "1. Berlin",
-            "2. Madrid",
-            "3. Paris",
-            "4. Rome"
+            "Berlin",
+            "Madrid",
+            "Paris",
+            "Rome"
         ],
-        rightAns:" Paris"
+        rightAns: " Paris"
     },
     {
         question: 'Which planet is known as the "Red Planet"?',
         options: [
-            "1. Venus",
-            "2. Mars",
-            "3. Jupiter",
-            "4. Saturn"
+            "Venus",
+            "Mars",
+            "Jupiter",
+            "Saturn"
         ],
         rightAns: "Mars"
     },
     {
         question: 'Who wrote the play "Romeo and Juliet"?',
         options: [
-            "1. William Wordsworth",
-            "2. Charles Dickens",
-            "3. William Shakespeare",
-            "4. George Orwell"
+            "William Wordsworth",
+            "Charles Dickens",
+            "William Shakespeare",
+            "George Orwell"
         ],
-        rightAns:"William Shakespeare"
+        rightAns: "William Shakespeare"
     },
     {
         question: 'What is the largest mammal on Earth?',
         options: [
-            "1. Elephant",
-            "2. Giraffe",
-            "3. Blue Whale",
-            "4. Great White Shark"
+            "Elephant",
+            "Giraffe",
+            "Blue Whale",
+            "Great White Shark"
         ],
-        rightAns:"Blue Whale"
+        rightAns: "Blue Whale"
     },
     {
         question: 'Which gas is most abundant in the Earth\'s atmosphere?',
         options: [
-            "1. Oxygen",
-            "2. Carbon Dioxide",
-            "3. Nitrogen",
-            "4. Hydrogen"
+            "Oxygen",
+            "Carbon Dioxide",
+            "Nitrogen",
+            "Hydrogen"
         ],
-        rightAns:"Nitrogen"
+        rightAns: "Nitrogen"
     },
     {
         question: 'In which continent is the Sahara Desert located?',
         options: [
-            "1. Asia",
-            "2. Africa",
-            "3. Australia",
-            "4. South America"
+            "Asia",
+            "Africa",
+            "Australia",
+            "South America"
         ],
-        rightAns:"Asia"
+        rightAns: "Asia"
     },
     {
         question: 'Who was the first person to walk on the moon?',
         options: [
-            "1. Neil Armstrong",
-            "2. Yuri Gagarin",
-            "3. Buzz Aldrin",
-            "4. Alan Shepard"
+            "Neil Armstrong",
+            "Yuri Gagarin",
+            "Buzz Aldrin",
+            "Alan Shepard"
         ],
-        rightAns:"Neil Armstrong"
+        rightAns: "Neil Armstrong"
     },
     {
         question: 'What is the longest river in the world?',
         options: [
-            "1. Amazon",
-            "2. Nile",
-            "3. Yangtze",
-            "4. Mississippi"
+            "Amazon",
+            "Nile",
+            "Yangtze",
+            "Mississippi"
         ],
-        rightAns:"Nile"
+        rightAns: "Nile"
     },
     {
         question: 'How many planets are in our solar system?',
         options: [
-            "1. 7",
-            "2. 8",
-            "3. 9",
-            "4. 10"
+            "7",
+            "8",
+            "9",
+            "10"
         ],
-        rightAns:"8"
+        rightAns: "8"
     },
     {
         question: 'Who invented the light bulb?',
         options: [
-            "1. Nikola Tesla",
-            "2. Alexander Graham Bell",
-            "3. Thomas Edison",
-            "4. Albert Einstein"
+            "Nikola Tesla",
+            "Alexander Graham Bell",
+            "Thomas Edison",
+            "Albert Einstein"
         ],
-        rightAns:"Thomas Edison"
+        rightAns: "Thomas Edison"
     }
 
 ];
@@ -117,6 +117,7 @@ var questions = [
 let currentQuestionIndex = Math.floor(Math.random() * questions.length); // Start with a random question
 let questionsSeen = new Set();
 
+//for progress bar => variables
 const totalQuestions = 10;
 let progressStep = 10; // Increment step for each answered question
 
@@ -126,7 +127,7 @@ function loadQuestion() {
     const display = document.getElementById("quiz-page");
     const questionObject = questions[currentQuestionIndex];
 
-    // Create the HTML for the current question and its options
+    //  HTML for the current question and its options
     const displayQuiz = `
         <div id="question-container">
             <h1>Question ${questionsSeen.size + 1} of 10</h1>
@@ -140,13 +141,17 @@ function loadQuestion() {
                 ${questionObject.options.map((option, index) => `
                     <div class="option-text">
                         <input type="radio" name="options" id="option${index}" value="${option}">
-                        <label for="option${index}">${option}</label>
+                        <label for="option${index}">${index + 1}. ${option}</label>
                     </div>
                 `).join('')}
             </div>
             <div class="previous-submit">
                 <div id="previous">
-                    
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="22" viewBox="0 0 28 22" fill="none">
+                        <path d="M26 11L2 11M2 11L11 20M2 11L11 2" stroke="#8E8E93" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <p>Previous</p>
                 </div>
 
                 <div id="submit-continue"> 
@@ -162,43 +167,87 @@ function loadQuestion() {
 
     // Set the HTML content of quiz-page
     display.innerHTML = displayQuiz;
-    
+
 
     // Add event listener for the submit button
     document.getElementById("submit-continue").addEventListener("click", handleNextQuestion);
+
+    // Add event listener for the previous button
     // document.getElementById("previous").addEventListener("click", handlePreviousQuestion);
 
-    if (currentQuestionIndex > 0) {
-        previous.innerHTML = 
-        `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="22" viewBox="0 0 28 22" fill="none">
-                        <path d="M26 11L2 11M2 11L11 20M2 11L11 2" stroke="#8E8E93" stroke-width="3"
-                            stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <p>Previous</p>`
-    }
-    if (currentQuestionIndex ==0) {
-        console.log(currentQuestionIndex)
-        previous.style.display= none;
-    }
+    
+    //visibilty of the previous button
+    // if (questionsSeen.size==0) {
+    //     previous.style.display = "none";    
+    // }
+
+//===================================================
+if (questionsSeen.size > 0) {
+    previous.innerHTML = 
+    `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="22" viewBox="0 0 28 22" fill="none">
+                    <path d="M26 11L2 11M2 11L11 20M2 11L11 2" stroke="#8E8E93" stroke-width="3"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <p>Previous</p>`
+}
+console.log(questionsSeen);
+
+if (questionsSeen.size==0) {
+    previous.style.display = "none";    
+}
+
+// if (currentQuestionIndex ==0) {
+//     console.log(currentQuestionIndex)
+//     previous.style.display= none;
+// }
+    
+
+//======
 
 }
 
 function updateProgressBar() {
-    const progress = questionsSeen.size * progressStep; // Incremental progress by 10% per question
+    const progress = (questionsSeen.size+1) *  progressStep; // Incremental progress by 10% per question
     const progressbar = document.getElementById('progress');
     progressbar.style.width = progress + '%';
-  }
+}
 
 // Handle the next question display
 function handleNextQuestion() {
-    const options= document.getElementsByName("options");
+    const options = document.getElementsByName("options");
     let isSelected = false;
+
+    let index = 0;
+    let score = 0;
+    let rightAnswer = questions[currentQuestionIndex].rightAns;
+    // console.log(rightAnswer);
+
+
+    let choosedOption;
     for (let option of options) {
         if (option.checked) {
             isSelected = true;
+            choosedOption = (questions[currentQuestionIndex].options[index]);
+            // console.log(choosedOption)
             break;
         }
+        index++;
     }
+    // console.log({ choosedOption, rightAnswer })
+    if (choosedOption == rightAnswer) {
+        score = score + 10;
+        // console.log(score)
+    }
+
+    // for (let option of options) {
+    //     if (option.checked) {
+    //         isSelected = true;
+    //         console.log(questions[currentQuestionIndex].options[index]);
+
+    //         break;
+    //     }
+    //     index++;
+    // }
 
     // If no option is selected, show an alert and return
     if (!isSelected) {
@@ -211,7 +260,7 @@ function handleNextQuestion() {
     // If all questions have been seen, end the quiz
     if (questionsSeen.size === 10) {
         document.getElementById("quiz-page").innerHTML = "<h2>Quiz Completed!</h2>";
-        window.location= "/pages/leaderboard.html"
+        window.location = "/pages/leaderboard.html"
         return;
     }
 
@@ -224,8 +273,6 @@ function handleNextQuestion() {
 
     updateProgressBar();
 
-let userSelectedAnswer = document.getElementsByName("options").value;
-console.log(userSelectedAnswer);
 
 }
 
