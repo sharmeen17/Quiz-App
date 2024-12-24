@@ -130,7 +130,7 @@ function loadQuestion() {
     //  HTML for the current question and its options
     const displayQuiz = `
         <div id="question-container">
-            <h1>Question ${questionsSeen.size + 1} of 10</h1>
+            <h1>Question ${questionsSeen.size + 1} of ${totalQuestions}</h1>
                 <div class="progress-bar">
                     <div class="progress" id="progress" style="width: 10%;"></div>
                 </div>
@@ -173,44 +173,27 @@ function loadQuestion() {
     document.getElementById("submit-continue").addEventListener("click", handleNextQuestion);
 
     // Add event listener for the previous button
-    // document.getElementById("previous").addEventListener("click", handlePreviousQuestion);
+    document.getElementById("previous").addEventListener("click", handlePreviousQuestion);
 
-    
+
     //visibilty of the previous button
-    // if (questionsSeen.size==0) {
-    //     previous.style.display = "none";    
-    // }
+    if (questionsSeen.size == 0) {
+        previous.style.display = "none";
+    }
 
-//===================================================
-if (questionsSeen.size > 0) {
-    previous.innerHTML = 
-    `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="22" viewBox="0 0 28 22" fill="none">
-                    <path d="M26 11L2 11M2 11L11 20M2 11L11 2" stroke="#8E8E93" stroke-width="3"
-                        stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-                <p>Previous</p>`
-}
-console.log(questionsSeen);
+}//load question end
 
-if (questionsSeen.size==0) {
-    previous.style.display = "none";    
-}
 
-// if (currentQuestionIndex ==0) {
-//     console.log(currentQuestionIndex)
-//     previous.style.display= none;
-// }
-    
 
-//======
-
-}
 
 function updateProgressBar() {
-    const progress = (questionsSeen.size+1) *  progressStep; // Incremental progress by 10% per question
+    const progress = (questionsSeen.size + 1) * progressStep; // Incremental progress by 10% per question
     const progressbar = document.getElementById('progress');
     progressbar.style.width = progress + '%';
 }
+
+
+
 
 // Handle the next question display
 function handleNextQuestion() {
@@ -239,15 +222,6 @@ function handleNextQuestion() {
         // console.log(score)
     }
 
-    // for (let option of options) {
-    //     if (option.checked) {
-    //         isSelected = true;
-    //         console.log(questions[currentQuestionIndex].options[index]);
-
-    //         break;
-    //     }
-    //     index++;
-    // }
 
     // If no option is selected, show an alert and return
     if (!isSelected) {
@@ -274,6 +248,17 @@ function handleNextQuestion() {
     updateProgressBar();
 
 
+}//handlenextquestion end
+
+
+
+function handlePreviousQuestion() {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        questionsSeen--;
+        loadQuestion();
+    }
+    // console.log(questionsSeen);
 }
 
 // function handlePreviousQuestion(){
