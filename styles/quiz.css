@@ -133,6 +133,7 @@ body {
     align-items: center;
     gap: 16px;
     cursor: pointer;
+    visibility: hidden;
 }
 
 #previous>p {

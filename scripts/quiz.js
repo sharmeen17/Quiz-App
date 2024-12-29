@@ -117,23 +117,26 @@ var questions = [
 let currentQuestionIndex = Math.floor(Math.random() * questions.length); // Start with a random question
 let questionsSeen = new Set();
 
+let score=0;
+
 //for progress bar => variables
 const totalQuestions = 10;
 let progressStep = 10; // Increment step for each answered question
 
+let questionHistory = []; // Array to track questions and answers
+let currentHistoryIndex=0;
 
-// Display the question and options
-function loadQuestion() {
+function loadQuestion(isPrevious = false) {
     const display = document.getElementById("quiz-page");
     const questionObject = questions[currentQuestionIndex];
 
-    //  HTML for the current question and its options
+    // Generate HTML for the current question and its options
     const displayQuiz = `
         <div id="question-container">
             <h1>Question ${questionsSeen.size + 1} of ${totalQuestions}</h1>
-                <div class="progress-bar">
-                    <div class="progress" id="progress" style="width: 10%;"></div>
-                </div>
+            <div class="progress-bar">
+                <div class="progress" id="progress" style="width: ${questionsSeen.size * progressStep}%;"></div>
+            </div>
             <div class="question">
                 <h2>${questionsSeen.size + 1}. ${questionObject.question}</h2>
             </div>
@@ -147,14 +150,13 @@ function loadQuestion() {
             </div>
             <div class="previous-submit">
                 <div id="previous">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="22" viewBox="0 0 28 22" fill="none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="22" viewBox="0 0 28 22" fill="none">
                         <path d="M26 11L2 11M2 11L11 20M2 11L11 2" stroke="#8E8E93" stroke-width="3"
                             stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                     <p>Previous</p>
                 </div>
-
-                <div id="submit-continue"> 
+                <div id="submit-continue">
                     <p>Submit & Continue</p>
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="22" viewBox="0 0 28 22" fill="none">
                         <path d="M2 11L26 11M26 11L17 20M26 11L17 2" stroke="#0948B4" stroke-width="3"
@@ -168,110 +170,96 @@ function loadQuestion() {
     // Set the HTML content of quiz-page
     display.innerHTML = displayQuiz;
 
-
-    // Add event listener for the submit button
-    document.getElementById("submit-continue").addEventListener("click", handleNextQuestion);
-
-    // Add event listener for the previous button
-    document.getElementById("previous").addEventListener("click", handlePreviousQuestion);
-
-
-    //visibilty of the previous button
-    if (questionsSeen.size == 0) {
-        previous.style.display = "none";
+    // Restore selected option if navigating back
+    if (isPrevious && questionHistory[questionsSeen.size]) {
+        const previousAnswer = questionHistory[questionsSeen.size].selectedAnswer;
+        if (previousAnswer) {
+            document.querySelector(`input[value="${previousAnswer}"]`).checked = true;
+        }
     }
 
-}//load question end
+    // Add event listener for the Submit button
+    document.getElementById("submit-continue").addEventListener("click", handleNextQuestion);
 
+    // Add event listener for the Previous button
+    document.getElementById("previous").addEventListener("click", handlePreviousQuestion);
 
-
-
-function updateProgressBar() {
-    const progress = (questionsSeen.size + 1) * progressStep; // Incremental progress by 10% per question
-    const progressbar = document.getElementById('progress');
-    progressbar.style.width = progress + '%';
+    // Toggle the visibility of the Previous button
+    document.getElementById("previous").style.visibility = questionsSeen.size > 0 ? "visible" : "hidden";
 }
 
-
-
-
-// Handle the next question display
 function handleNextQuestion() {
     const options = document.getElementsByName("options");
     let isSelected = false;
+    let selectedAnswer;
 
-    let index = 0;
-    let score = 0;
-    let rightAnswer = questions[currentQuestionIndex].rightAns;
-    // console.log(rightAnswer);
-
-
-    let choosedOption;
     for (let option of options) {
         if (option.checked) {
             isSelected = true;
-            choosedOption = (questions[currentQuestionIndex].options[index]);
-            // console.log(choosedOption)
+            selectedAnswer = option.value;
             break;
         }
-        index++;
-    }
-    // console.log({ choosedOption, rightAnswer })
-    if (choosedOption == rightAnswer) {
-        score = score + 10;
-        // console.log(score)
     }
 
-
-    // If no option is selected, show an alert and return
+    // If no option is selected, show an alert
     if (!isSelected) {
         alert("Please select an option before proceeding to the next question.");
         return;
     }
 
+    // /Save the current question state to history
+    questionHistory[currentHistoryIndex] = {
+        questionIndex: currentQuestionIndex,
+        selectedOption: selectedAnswer
+    };
+
+    currentHistoryIndex++; // Move forward in history
+
+    // Check if the answer is correct and update the score
+    if (selectedAnswer === questions[currentQuestionIndex].rightAns) {
+        score += 10;
+    }
+
+    // Mark the question as seen
     questionsSeen.add(currentQuestionIndex);
 
     // If all questions have been seen, end the quiz
-    if (questionsSeen.size === 10) {
+    if (questionsSeen.size === totalQuestions) {
         document.getElementById("quiz-page").innerHTML = "<h2>Quiz Completed!</h2>";
-        window.location = "/pages/leaderboard.html"
+        window.location = "/pages/leaderboard.html";
         return;
     }
 
-    // Load a new random question that hasn't been seen yet
+    // Load a new random question that hasn't been seen
     do {
         currentQuestionIndex = Math.floor(Math.random() * questions.length);
     } while (questionsSeen.has(currentQuestionIndex));
 
     loadQuestion();
-
     updateProgressBar();
-
-
-}//handlenextquestion end
-
+}
 
 
 function handlePreviousQuestion() {
-    if (currentQuestionIndex > 0) {
-        currentQuestionIndex--;
-        questionsSeen--;
-        loadQuestion();
+    console.log(currentHistoryIndex)
+    if (currentHistoryIndex > 0) {
+        currentHistoryIndex--; // Move back in history
+        const previousData = questionHistory[currentHistoryIndex]; // Access the correct history
+        if (previousData) {
+            currentQuestionIndex = previousData.questionIndex; // Restore the previous question index
+            loadQuestion(true); // Load the previous question with restored answer
+            updateProgressBar();
+        }
     }
-    // console.log(questionsSeen);
 }
 
-// function handlePreviousQuestion(){
-//     // function handlePreviousQuestion() {
-//     //     if (currentQuestionIndex > 0) {
-//     //         currentQuestionIndex--;
-//     //         loadQuestion();
-//     //     }
-//     // }
-// }
+function updateProgressBar() {
+    const progress = (questionsSeen.size / totalQuestions) * 100; // Calculate progress percentage
+    const progressBar = document.getElementById('progress');
+    progressBar.style.width = `${progress}%`;
+}
 
 // Start the quiz by loading the first question
 function startQuiz() {
     loadQuestion();
 }
-
