@@ -133,12 +133,14 @@ function loadQuestion(isPrevious = false) {
     // Generate HTML for the current question and its options
     const displayQuiz = `
         <div id="question-container">
+            <div id="questionTitle">
             <h1>Question ${questionsSeen.size + 1} of ${totalQuestions}</h1>
+            </div>
             <div class="progress-bar">
                 <div class="progress" id="progress" style="width: ${questionsSeen.size * progressStep}%;"></div>
             </div>
             <div class="question">
-                <h2>${questionsSeen.size + 1}. ${questionObject.question}</h2>
+                <h2 id="questionLine">${questionsSeen.size + 1}. ${questionObject.question}</h2>
             </div>
             <div id="options-container">
                 ${questionObject.options.map((option, index) => `
@@ -169,6 +171,8 @@ function loadQuestion(isPrevious = false) {
 
     // Set the HTML content of quiz-page
     display.innerHTML = displayQuiz;
+
+    
 
     // Restore selected option if navigating back
     if (isPrevious && questionHistory[questionsSeen.size]) {
@@ -249,7 +253,12 @@ function handlePreviousQuestion() {
             currentQuestionIndex = previousData.questionIndex; // Restore the previous question index
             loadQuestion(true); // Load the previous question with restored answer
             updateProgressBar();
+            
         }
+ const questionTitleNew = document.getElementById("questionTitle");
+
+ questionTitleNew.innerHTML+= `<h1 id="questionTitle">Question ${questionsSeen.size} of ${totalQuestions}</h1>`
+
     }
 }
 
