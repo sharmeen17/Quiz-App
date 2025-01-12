@@ -117,14 +117,14 @@ var questions = [
 let currentQuestionIndex = Math.floor(Math.random() * questions.length); // Start with a random question
 let questionsSeen = new Set();
 
-let score=0;
+let score = 0;
 
 //for progress bar => variables
 const totalQuestions = 10;
 let progressStep = 10; // Increment step for each answered question
 
 let questionHistory = []; // Array to track questions and answers
-let currentHistoryIndex=0;
+let currentHistoryIndex = 0;
 
 function loadQuestion(isPrevious = false) {
     const display = document.getElementById("quiz-page");
@@ -139,8 +139,8 @@ function loadQuestion(isPrevious = false) {
             <div class="progress-bar">
                 <div class="progress" id="progress" style="width: ${questionsSeen.size * progressStep}%;"></div>
             </div>
-            <div class="question">
-                <h2 id="questionLine">${questionsSeen.size + 1}. ${questionObject.question}</h2>
+            <div class="question" id="questionLine">
+                <h2>${questionsSeen.size + 1}. ${questionObject.question}</h2>
             </div>
             <div id="options-container">
                 ${questionObject.options.map((option, index) => `
@@ -172,7 +172,7 @@ function loadQuestion(isPrevious = false) {
     // Set the HTML content of quiz-page
     display.innerHTML = displayQuiz;
 
-    
+
 
     // Restore selected option if navigating back
     if (isPrevious && questionHistory[questionsSeen.size]) {
@@ -245,27 +245,44 @@ function handleNextQuestion() {
 
 
 function handlePreviousQuestion() {
-    console.log(currentHistoryIndex)
     if (currentHistoryIndex > 0) {
         currentHistoryIndex--; // Move back in history
         const previousData = questionHistory[currentHistoryIndex]; // Access the correct history
+
         if (previousData) {
             currentQuestionIndex = previousData.questionIndex; // Restore the previous question index
-            loadQuestion(true); // Load the previous question with restored answer
-            updateProgressBar();
+            loadQuestion(true); // Load the previous question and restore the answer
             
+            // Update progress and display restored question number
+            const progressBar = document.getElementById('progress');
+            progressBar.style.width = `${(questionsSeen.size - 1) * progressStep}%`;
+            
+            // Display the correct question number and content
+            document.getElementById("questionTitle").innerHTML = `<h1>Question ${currentHistoryIndex + 1} of ${totalQuestions}</h1>`;
+            document.getElementById("questionLine").innerHTML = `<h2>${currentHistoryIndex + 1}. ${questions[currentQuestionIndex].question}</h2>`;
+
+            // Restore previously selected option
+            const previousAnswer = previousData.selectedOption;
+            if (previousAnswer) {
+                const optionElement = document.querySelector(`input[value="${previousAnswer}"]`);
+                if (optionElement) {
+                    optionElement.checked = true;
+                }
+            }
         }
- const questionTitleNew = document.getElementById("questionTitle");
-
- questionTitleNew.innerHTML+= `<h1 id="questionTitle">Question ${questionsSeen.size} of ${totalQuestions}</h1>`
-
+    } else {
+        alert("You are at the first question!");
     }
 }
+
+//=========================================================================================================
 
 function updateProgressBar() {
     const progress = (questionsSeen.size / totalQuestions) * 100; // Calculate progress percentage
     const progressBar = document.getElementById('progress');
-    progressBar.style.width = `${progress}%`;
+    // progressBar.style.width = `${progress}%`;
+    progressBar.style.width = progress+ "%";
+
 }
 
 // Start the quiz by loading the first question
