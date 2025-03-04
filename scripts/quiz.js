@@ -113,40 +113,59 @@ var questions = [
 
 ];
 
-// Keep track of questions and the current question index
-let currentQuestionIndex = Math.floor(Math.random() * questions.length); // Start with a random question
-let questionsSeen = new Set();
+if (!localStorage.getItem("quizQuestions")) {
+    localStorage.setItem("quizQuestions", JSON.stringify(questions));
+}
+
 
 let score = 0;
-
-//for progress bar => variables
+let currentIndex = 0;
 const totalQuestions = 10;
-let progressStep = 10; // Increment step for each answered question
+let progressStep = 10;
+// Increment step for each answered question
 
-let questionHistory = []; // Array to track questions and answers
-let currentHistoryIndex = 0;
+
+function getRandomQuestions() {
+    const allQuestions = JSON.parse(localStorage.getItem("quizQuestions"));
+    let randomQuestion = [];
+    let questionIndex = []
+    while (randomQuestion.length < 10) {
+        let randomIndex = Math.floor(Math.random() * allQuestions.length);
+        //   question.add(randomIndex);
+        if (!questionIndex.includes(randomIndex)) {
+            questionIndex.push(randomIndex);
+            randomQuestion.push(allQuestions[randomIndex]);
+        }
+    }
+    return randomQuestion
+}
+
+const quizSet = getRandomQuestions(); // This will be different for each user
+
 
 function loadQuestion(isPrevious = false) {
     const display = document.getElementById("quiz-page");
-    const questionObject = questions[currentQuestionIndex];
+
+    // const questionObject = questions[currentQuestionIndex];
 
     // Generate HTML for the current question and its options
     const displayQuiz = `
         <div id="question-container">
             <div id="questionTitle">
-            <h1>Question ${questionsSeen.size + 1} of ${totalQuestions}</h1>
+            <h1>Question ${currentIndex + 1} of ${totalQuestions}</h1>
             </div>
             <div class="progress-bar">
-                <div class="progress" id="progress" style="width: ${questionsSeen.size * progressStep}%;"></div>
+                <div class="progress" id="progress" style="width: ${quizSet.size * progressStep}%;"></div>
             </div>
             <div class="question" id="questionLine">
-                <h2>${questionsSeen.size + 1}. ${questionObject.question}</h2>
+                <h2>${currentIndex + 1}. ${quizSet[currentIndex].question}</h2>
             </div>
             <div id="options-container">
-                ${questionObject.options.map((option, index) => `
+               ${quizSet[currentIndex].options.map((option, index) => `
                     <div class="option-text">
                         <input type="radio" name="options" id="option${index}" value="${option}">
                         <label for="option${index}">${index + 1}. ${option}</label>
+                
                     </div>
                 `).join('')}
             </div>
@@ -171,16 +190,17 @@ function loadQuestion(isPrevious = false) {
 
     // Set the HTML content of quiz-page
     display.innerHTML = displayQuiz;
+    updateProgressBar();
 
 
 
-    // Restore selected option if navigating back
-    if (isPrevious && questionHistory[questionsSeen.size]) {
-        const previousAnswer = questionHistory[questionsSeen.size].selectedAnswer;
-        if (previousAnswer) {
-            document.querySelector(`input[value="${previousAnswer}"]`).checked = true;
-        }
-    }
+    // // Restore selected option if navigating back
+    // if (isPrevious && questionHistory[currentIndex.size]) {
+    //     const previousAnswer = questionHistory[currentIndex.size].selectedAnswer;
+    //     if (previousAnswer) {
+    //         document.querySelector(`input[value="${previousAnswer}"]`).checked = true;
+    //     }
+    // }
 
     // Add event listener for the Submit button
     document.getElementById("submit-continue").addEventListener("click", handleNextQuestion);
@@ -189,11 +209,24 @@ function loadQuestion(isPrevious = false) {
     document.getElementById("previous").addEventListener("click", handlePreviousQuestion);
 
     // Toggle the visibility of the Previous button
-    document.getElementById("previous").style.visibility = questionsSeen.size > 0 ? "visible" : "hidden";
+    document.getElementById("previous").style.visibility = currentIndex > 0 ? "visible" : "hidden";
 }
 
+
+function updateProgressBar() {
+    const progress = ((currentIndex + 1) / totalQuestions) * 100; // Calculate progress percentage
+    const progressBar = document.getElementById('progress');
+    // progressBar.style.width = `${progress}%`;
+    progressBar.style.width = progress + "%";
+
+}
+
+
+const options = document.getElementsByName("options");
+
+
 function handleNextQuestion() {
-    const options = document.getElementsByName("options");
+
     let isSelected = false;
     let selectedAnswer;
 
@@ -204,88 +237,221 @@ function handleNextQuestion() {
             break;
         }
     }
+    quizSet[currentIndex].choosedAnswer = selectedAnswer; //saved the selected answer by user
+
 
     // If no option is selected, show an alert
     if (!isSelected) {
         alert("Please select an option before proceeding to the next question.");
         return;
     }
+    currentIndex++;
 
-    // /Save the current question state to history
-    questionHistory[currentHistoryIndex] = {
-        questionIndex: currentQuestionIndex,
-        selectedOption: selectedAnswer
-    };
 
-    currentHistoryIndex++; // Move forward in history
+
 
     // Check if the answer is correct and update the score
-    if (selectedAnswer === questions[currentQuestionIndex].rightAns) {
+    if (selectedAnswer == quizSet[currentIndex - 1].rightAns) {
         score += 10;
     }
 
-    // Mark the question as seen
-    questionsSeen.add(currentQuestionIndex);
+    // console.log(score);
 
-    // If all questions have been seen, end the quiz
-    if (questionsSeen.size === totalQuestions) {
-        document.getElementById("quiz-page").innerHTML = "<h2>Quiz Completed!</h2>";
+    // console.log(quizSet);
+
+    const Newcurrentuser = JSON.parse(localStorage.getItem("currentUser"));
+
+
+
+    if (currentIndex == quizSet.length) {
+        //add user score etc here
+
+
+        let userData = JSON.parse(localStorage.getItem("userData")) || [];
+        // const Newcurrentuser = JSON.parse(localStorage.getItem("currentUser"));
+
+        let Zname = Newcurrentuser.userName;
+        let Zemail = Newcurrentuser.userEmail;
+
+
+
+
+        let loggedInUser = {
+            playerName: Zname,
+            playerEmail: Zemail,
+            Score: score,
+            TimeTaken: "",
+            Quizdata: quizSet
+        }
+
+        userData.push(loggedInUser);
+        localStorage.setItem("userData", JSON.stringify(userData));
+
+
+
+
+
+
+
+
         window.location = "/pages/leaderboard.html";
-        return;
     }
 
-    // Load a new random question that hasn't been seen
-    do {
-        currentQuestionIndex = Math.floor(Math.random() * questions.length);
-    } while (questionsSeen.has(currentQuestionIndex));
+    // console.log(quizSet.length);
 
-    loadQuestion();
+    // setTimeout(function () {
+    //     window.location = "/pages/leaderboard.html"; //will redirect to your blog page (an ex: blog.html)
+    // }, 1000); //will call the function after 2 secs.
+
     updateProgressBar();
-}
 
+    if (currentIndex < 10) {
+        loadQuestion();
+    }
+
+}
 
 function handlePreviousQuestion() {
-    if (currentHistoryIndex > 0) {
-        currentHistoryIndex--; // Move back in history
-        const previousData = questionHistory[currentHistoryIndex]; // Access the correct history
+    // debugger
+    if (currentIndex > 0) {
+        currentIndex--; // Move back to the previous question
+        loadQuestion();
 
-        if (previousData) {
-            currentQuestionIndex = previousData.questionIndex; // Restore the previous question index
-            loadQuestion(true); // Load the previous question and restore the answer
-            
-            // Update progress and display restored question number
-            const progressBar = document.getElementById('progress');
-            progressBar.style.width = `${(questionsSeen.size - 1) * progressStep}%`;
-            
-            // Display the correct question number and content
-            document.getElementById("questionTitle").innerHTML = `<h1>Question ${currentHistoryIndex + 1} of ${totalQuestions}</h1>`;
-            document.getElementById("questionLine").innerHTML = `<h2>${currentHistoryIndex + 1}. ${questions[currentQuestionIndex].question}</h2>`;
+        // Restore previously selected answer
+        const previousAnswer = quizSet[currentIndex].choosedAnswer;
+        const options = document.getElementsByName("options");
 
-            // Restore previously selected option
-            const previousAnswer = previousData.selectedOption;
-            if (previousAnswer) {
-                const optionElement = document.querySelector(`input[value="${previousAnswer}"]`);
-                if (optionElement) {
-                    optionElement.checked = true;
-                }
-            }
+        for (let option of options) {
+            option.checked = (option.value === previousAnswer);
         }
+
+        // Update progress bar
+        const progressBar = document.getElementById('progress');
+        progressBar.style.width = `${(currentIndex / (quizSet.length - 1)) * 100}%`;
+
+        // Load previous question
     } else {
-        alert("You are at the first question!");
+        alert("This is the first question. You cannot go back further.");
     }
 }
 
-//=========================================================================================================
-
-function updateProgressBar() {
-    const progress = (questionsSeen.size / totalQuestions) * 100; // Calculate progress percentage
-    const progressBar = document.getElementById('progress');
-    // progressBar.style.width = `${progress}%`;
-    progressBar.style.width = progress+ "%";
-
-}
 
 // Start the quiz by loading the first question
 function startQuiz() {
+    // const loggedInUser = {
+    //     UserName: "moin",
+    //     UserEmail: "moin123",
+    //     Score:"34",
+    //     TimeTaken: "34",
+    //     Answers:"jkdsfjks"
+    // }
+
+    // localStorage.setItem("loggedUser", loggedInUser)
+
+
     loadQuestion();
+
+}
+
+
+
+
+
+
+
+//=======================leaderboard============================================================
+
+// function leaderboard(){
+//     let userScore = JSON.parse(localStorage.getItem("userData"));
+
+//     // console.log(userScore)
+//     let scoreParameters = userScore.map(user => user.Score);
+
+//     console.log(scoreParameters);
+
+//     // let scoreParameter = userScore[0].Score;
+
+//     // console.log(scoreParameter);
+
+
+// }
+
+
+
+function leaderboard() {
+    let userDataItem = JSON.parse(localStorage.getItem("userData"));
+    let currentUserItem = JSON.parse(localStorage.getItem("currentUser"));
+
+    let displayUserRank = document.getElementById("displayUserRank");
+
+    console.log(currentUserItem)
+    
+
+    // Sort in descending order
+    const sortedUsers = userDataItem.sort((p1, p2) =>
+        (p1.Score < p2.Score) ? 1 : (p1.Score > p2.Score) ? -1 : 0);
+    console.log(sortedUsers[0].playerName);
+
+
+    let currentUserRank;
+    sortedUsers.forEach((sU, index) => {
+        console.log(sU)                                                 //checking mail for rank
+        if (sU.playerEmail === currentUserItem.userEmail) {
+            currentUserRank = index + 1;
+        }
+    });
+
+    displayUserRank.innerHTML += currentUserRank
+    // console.log(currentUserRank)
+
+
+    // Get the highest score
+    let highestScore = sortedUsers[0];
+    let secondHighestScore = sortedUsers[1];
+    let thirdHighestScore = sortedUsers[2];
+    let fourthHighestScore = sortedUsers[3];
+    let fifthHighestScore = sortedUsers[4];
+    let sixthHighestScore = sortedUsers[5];
+
+    
+
+    let displayFirstRank = document.getElementById("firstRankScore");
+    let displaySecondRank = document.getElementById("secondRankScore");
+    let displayThirdRank = document.getElementById("thirdRankScore");
+    let displayFourthRank = document.getElementById("fourthRankScore");
+    let displayFifthRank = document.getElementById("fifthRankScore");
+    let displaySixthRank = document.getElementById("sixthRankScore");
+
+
+    displayFirstRank.innerHTML += highestScore.Score;
+    displaySecondRank.innerHTML += secondHighestScore?.Score || 0;
+    displayThirdRank.innerHTML+= thirdHighestScore?.Score || 0;
+    displayFourthRank.innerHTML+= fourthHighestScore?.Score || 0; 
+    displayFifthRank.innerHTML+= fifthHighestScore?.Score || 0;
+    displaySixthRank.innerHTML += sixthHighestScore?.Score || 0;
+
+    //get name of player with highest score
+    let firstRank = sortedUsers[0].playerName;
+    let secondRank = sortedUsers[1]?.playerName || NaN;
+    let thirdRank = sortedUsers[2]?.playerName || NaN;
+    let fourthRank = sortedUsers[3]?.playerName || NaN;
+    let fifthRank = sortedUsers[4]?.playerName || NaN;
+    let sixthRank = sortedUsers[5]?.playerName || NaN;
+
+    let displayPlayer1Name = document.getElementById("player1");
+    let displayPlayer2Name = document.getElementById("player2");
+    let displayPlayer3Name = document.getElementById("player3");
+    let displayPlayer4Name = document.getElementById("player4");
+    let displayPlayer5Name = document.getElementById("player5");
+    let displayPlayer6Name = document.getElementById("player6");
+
+    displayPlayer1Name.innerHTML += firstRank;
+    displayPlayer2Name.innerHTML += secondRank;
+    displayPlayer3Name.innerHTML += thirdRank;
+    displayPlayer4Name.innerHTML += fourthRank;
+    displayPlayer5Name.innerHTML += fifthRank;
+    displayPlayer6Name.innerHTML += sixthRank;
+    console.log(firstRank)
+
+
 }

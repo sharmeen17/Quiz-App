@@ -1,14 +1,37 @@
-// Toggle from signup page to login page
+//setting admin details
+// let adminEmail= "sharmeengardi@gmail.com";
+// let adminPassword = "Admin@Pass123"
+
+
+let adminDetails = {
+    adminEmail: "sharmeengardi@gmail.com",
+    adminPassword: "Admin@Pass123"
+}
+
+
+localStorage.setItem("adminData", JSON.stringify(adminDetails)); // Save current 
+
+
+
+
+
+
+
+
+
+// ======================================Toggle from signup page to login page
 function login() {
-    window.location = "pages/login.html"
-}
-
-// Toggle from login page to signup page
-function signup() {
+    console.log("working");
     window.location = "/index.html"
+
 }
 
-// Password hide and show
+// ======================================Toggle from login page to signup page
+function signup() {
+    window.location = "pages/signup.html"
+}
+
+// ==============================================Password hide and show
 // for login
 function passwordHideShowLogin() {
     let showPassword = document.getElementById("viewpassword");
@@ -36,23 +59,39 @@ function passwordHideShow() {
 
 //=======================================login page========================================
 
-function handleLogin(){
+function handleLogin() {
+    let users = JSON.parse(localStorage.getItem("users")) || []; // Users array
 
-    let users = JSON.parse(localStorage.getItem("users")) || [];            //users array
+    let admin = JSON.parse(localStorage.getItem("adminData"));
 
-    var enteredEmail = document.getElementById("email-login").value;         //get input values
+    var enteredEmail = document.getElementById("email-login").value; // Get input values
     var enteredPassword = document.getElementById("user-password-login").value;
 
-    let userEmailMatches = users.some(user => user.userEmail === enteredEmail);
-    let userPasswordMatches = users.some(user => user.userPassword === enteredPassword);
+    let currentUser = users.find(user => user.userEmail === enteredEmail && user.userPassword === enteredPassword);
+    let checkAdmin = (admin.adminEmail === enteredEmail && admin.adminPassword === enteredPassword);
 
-    if (userEmailMatches||userPasswordMatches) {
-        window.location = "/pages/startQuiz.html";            //redirect to Start quiz
+    // localStorage.setItem("loggedUser", JSON.stringify({
+
+    // }));//
+
+
+
+    if (checkAdmin) {
+        window.location = "/Admin/admin.html" // add location
+    }
+    else if (currentUser) {
+        localStorage.setItem("currentUser", JSON.stringify(currentUser)); // Save current user
+
+        // localStorage.setItem("loggedUser", JSON.stringify(loggedInUser));
+        window.location = "/pages/startQuiz.html"; // Redirect to Start 
+        // loadLeaderboardData();
     }
     else {
         alert("Incorrect email or password!");
     }
 }
+
+
 
 
 //=======================================  handle signup  ==================================
@@ -85,7 +124,7 @@ function handleSignup() {
             alert("User Already exists");                                    //user exists
         }
         else {
-            window.location = "/pages/login.html";            //redirect to login page
+            window.location = "/index.html";            //redirect to login page
         }
 
     }
@@ -150,6 +189,7 @@ document.getElementById("email-signup").addEventListener("input", function () {
     let email = this.value;
     let invalidMsg = document.getElementById("invalid-email");
     let reqEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+ 
     invalidMsg.innerHTML = reqEmail.test(email) ? "" : "Enter a valid Email";
 });
 
@@ -166,14 +206,82 @@ document.getElementById("user-password").addEventListener("input", function () {
 // ===================================== start quiz page to quiz ================================================
 
 function startQuizbutton() {
-    console.log("function called");
+
+    // console.log("function called");
     window.location = "/pages/quiz.html";
 }
 
 
+function loadLeaderboardData() {
+    let userInitials = JSON.parse(localStorage.getItem("currentUser"));
+    // console.log(userInitials)
+    
+    let userinitName = userInitials.userName;
+    // console.log(userinitName)
+    
+    let displayUserInitial = document.getElementById("initials");
+    
+    displayUserInitial.innerHTML = userinitName;
+    console.log("load funtion called")
+}
 
-// =================================== Leaderboard=========================================================
 
+//menu on avatar click
+function usermenu() {
+
+    let userMenu = document.getElementById("menu");
+    let existingMenu = document.querySelector(".menu");
+
+
+    if (existingMenu) {
+        existingMenu.remove(); // Hide menu if it exists (Second Click)
+    } else {
+    userMenu.innerHTML += `<div class="menu" >
+                    <p id="menuUserName"></p>
+                    <div class="edit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                          </svg>
+                        <p>Edit</p>
+                    </div>
+                    <div class="logout">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-power" viewBox="0 0 16 16">
+                            <path d="M7.5 1v7h1V1z"/>
+                            <path d="M3 8.812a5 5 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812"/>
+                          </svg>
+                        <p onclick= "initiateLogout()">Logout</p>
+                    </div>
+                </div>`
+
+    
+
+    let userInitials = JSON.parse(localStorage.getItem("currentUser"));
+    // console.log(userInitials)
+
+    let userinitName = userInitials.userName;
+    // console.log(userinitName)
+
+    // let displayUserInitial = document.getElementById("initials");
+    let menuUserName = document.getElementById("menuUserName");
+
+    menuUserName.innerHTML = userinitName;
+    }
+
+}
+
+function initiateLogout(){
+    let checkCurrentUeser = JSON.parse(localStorage.getItem("currentUser"));
+    console.log(checkCurrentUeser)
+
+    localStorage.removeItem("currentUser"); // Removes only the "username" key
+
+    window.location = "/index.html"
+
+}
+
+
+
+///arrow============================================================================================================
 
 
 // // Add the sticky class to the navbar when you reach its scroll position. Remove the sticky class when you leave the scroll position.
@@ -204,3 +312,8 @@ function pageUpDown() {
     });
 
 }
+//===============================================================================
+
+// =================================== Leaderboard=========================================================
+
+// in quiz.js
