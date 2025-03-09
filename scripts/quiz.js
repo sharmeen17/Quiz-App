@@ -247,9 +247,6 @@ function handleNextQuestion() {
     }
     currentIndex++;
 
-
-
-
     // Check if the answer is correct and update the score
     if (selectedAnswer == quizSet[currentIndex - 1].rightAns) {
         score += 10;
@@ -273,9 +270,6 @@ function handleNextQuestion() {
         let Zname = Newcurrentuser.userName;
         let Zemail = Newcurrentuser.userEmail;
 
-
-
-
         let loggedInUser = {
             playerName: Zname,
             playerEmail: Zemail,
@@ -286,12 +280,6 @@ function handleNextQuestion() {
 
         userData.push(loggedInUser);
         localStorage.setItem("userData", JSON.stringify(userData));
-
-
-
-
-
-
 
 
         window.location = "/pages/leaderboard.html";

@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Inter";
+}
+
+body{
+    overflow-x: hidden;
+    /* background-color: #F5F5F5; */
+    font-family: "Inter";
+    overflow: hidden;
+    background-color: #F5F5F5;
+}
+
+#adminNav{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+    background-color: #F5F5F5;
+    border-bottom: 1px solid #CBCBCB;
+}
+
+.menu-container{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#adminMenu{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* .side-menu{
+    width: 200px;
+    height: 100vh;
+    background-color: #ffffff;
+    padding: 30px;
+    display: none;
+    transition: left 0.4s ease-in-out;
+} */
+
+.side-menu {
+    width: 200px;
+    height: 100vh;
+    background-color: #ffffff;
+    padding: 30px;
+    position: fixed;
+    left: 0;
+    top: 65px;
+    transition: left 0.9s ease-in-out; 
+}
+
+.side-menu.active {
+    left: -453px;
+}
+
+#welcome{
+    display: flex;
+    gap: 379px;
+    position: fixed;
+    left: 650px;
+    top: 300px;
+    transition: left 0.9s ease-in-out; /* Smooth transition */
+}
+
+#welcome.active{
+    left: 500px; /* Slide in */
+}
+
+.hamburger{
+    cursor: pointer;
+}
+
+.menu{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: gray;
+}
+
+.menu-option{
+    cursor: pointer;
+}
+
+.welcome{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
