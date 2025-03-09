@@ -17,7 +17,7 @@ body{
 #adminNav{
     display: flex;
     justify-content: space-between;
-    padding: 20px;
+    padding: 20px 30px;
     align-items: center;
     background-color: #F5F5F5;
     border-bottom: 1px solid #CBCBCB;
@@ -26,13 +26,13 @@ body{
 .menu-container{
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 73px;
 }
 
 #adminMenu{
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 20px;
 }
 
 /* .side-menu{
@@ -51,12 +51,23 @@ body{
     padding: 30px;
     position: fixed;
     left: 0;
-    top: 65px;
-    transition: left 0.9s ease-in-out; 
+    top: 75px;
+    transition: left 0.7s ease-in-out; 
 }
 
 .side-menu.active {
     left: -453px;
+}
+
+.hamburger {
+    display: inline-block;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.5s ease-in-out;
+}
+
+.hamburger.active{
+    transform: rotate(360deg);
 }
 
 #welcome{
@@ -65,7 +76,7 @@ body{
     position: fixed;
     left: 650px;
     top: 300px;
-    transition: left 0.9s ease-in-out; /* Smooth transition */
+    transition: left 0.7s ease-in-out; /* Smooth transition */
 }
 
 #welcome.active{
@@ -85,10 +96,49 @@ body{
 
 .menu-option{
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .welcome{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.admin-icon{
+    cursor: pointer;
+}
+
+#adminLogout{
+    
+    border-radius: 10px;
+    position: absolute;
+    width: 200px;
+    height: auto;
+    top: 82px;
+    right: 10px;
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: #ffffff;
+    box-shadow: 0px 20px 40px 0px rgba(28, 28, 30, 0.10);
+}
+
+#admin-details{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#logout-button{
+    border: none;
+    border-radius: 8px;
+    background-color: #F3BD00;
+    padding: 8px;
+    cursor: pointer;
 }
